@@ -1,18 +1,7 @@
 <!DOCTYPE html>
-<!--
-  THIS IS NOT THE INTERESTING FILE
-
-  This is just some UI code. There's nothing interesting and unique in this file. The interesting
-  thing about this demo is the server side, which is in chat.mjs.
-
-  WARNING: This was written by a systems engineer, not a web developer. It's probably bad.
--->
-
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<!--===================================================================================-->
-<!-- Inline style to avoid an extra round trip before the page can render. -->
 <style type="text/css">
 * {
   box-sizing: border-box;
@@ -170,10 +159,6 @@ p:last-of-type {
 }
 
 </style>
-
-<!--===================================================================================-->
-<!-- The actual HTML. There is not much of it. -->
-
   </head>
   <body>
     <form id="name-form" action="/fake-form-action">
@@ -196,9 +181,6 @@ p:last-of-type {
     </form>
   </body>
 
-<!--===================================================================================-->
-<!-- Client-side JavaScript code for the app. -->
-
 <script type="text/javascript">
 let currentWebSocket = null;
 
@@ -213,7 +195,6 @@ let chatlog = document.querySelector("#chatlog");
 let chatInput = document.querySelector("#chat-input");
 let roster = document.querySelector("#roster");
 
-// Is the chatlog scrolled to the bottom?
 let isAtBottom = true;
 
 let username;
@@ -221,7 +202,6 @@ let roomname;
 
 let hostname = window.location.host;
 if (hostname == "") {
-  // Probably testing the HTML locally.
   hostname = "edge-chat-demo.cloudflareworkers.com";
 }
 
@@ -345,14 +325,11 @@ function startChat() {
 
   chatInput.focus();
   document.body.addEventListener("click", event => {
-    // If the user clicked somewhere in the window without selecting any text, focus the chat
-    // input.
     if (window.getSelection().toString() == "") {
       chatInput.focus();
     }
   });
 
-  // Detect mobile keyboard appearing and disappearing, and adjust the scroll as appropriate.
   if('visualViewport' in window) {
     window.visualViewport.addEventListener('resize', function(event) {
       if (isAtBottom) {
@@ -368,7 +345,6 @@ let lastSeenTimestamp = 0;
 let wroteWelcomeMessages = false;
 
 function join() {
-  // If we are running via wrangler dev, use ws:
   const wss = document.location.protocol === "http:" ? "ws://" : "wss://";
   let ws = new WebSocket(wss + hostname + "/api/room/" + roomname + "/websocket");
   let rejoined = false;
@@ -379,19 +355,14 @@ function join() {
       rejoined = true;
       currentWebSocket = null;
 
-      // Clear the roster.
       while (roster.firstChild) {
         roster.removeChild(roster.firstChild);
       }
 
-      // Don't try to reconnect too rapidly.
       let timeSinceLastJoin = Date.now() - startTime;
       if (timeSinceLastJoin < 10000) {
-        // Less than 10 seconds elapsed since last join. Pause a bit.
         await new Promise(resolve => setTimeout(resolve, 10000 - timeSinceLastJoin));
       }
-
-      // OK, reconnect now!
       join();
     }
   }
@@ -399,7 +370,6 @@ function join() {
   ws.addEventListener("open", event => {
     currentWebSocket = ws;
 
-    // Send user info message.
     ws.send(JSON.stringify({name: username}));
   });
 
@@ -420,16 +390,9 @@ function join() {
         }
       }
     } else if (data.ready) {
-      // All pre-join messages have been delivered.
       if (!wroteWelcomeMessages) {
         wroteWelcomeMessages = true;
-        addChatMessage(null,
-            "* This is a demo app built with Cloudflare Workers Durable Objects. The source code " +
-            "can be found at: https://github.com/cloudflare/workers-chat-demo");
-        addChatMessage(null,
-            "* WARNING: Participants in this chat are random people on the internet. " +
-            "Names are not authenticated; anyone can pretend to be anyone. The people " +
-            "you are chatting with are NOT Cloudflare employees. Chat history is saved.");
+        addChatMessage(null,"welcome ");
         if (roomname.length == 64) {
           addChatMessage(null,
               "* This is a private room. You can invite someone to the room by sending them the URL.");
@@ -439,7 +402,6 @@ function join() {
         }
       }
     } else {
-      // A regular chat message.
       if (data.timestamp > lastSeenTimestamp) {
         addChatMessage(data.name, data.message);
         lastSeenTimestamp = data.timestamp;
@@ -467,9 +429,6 @@ function addChatMessage(name, text) {
   }
   p.appendChild(document.createTextNode(text));
 
-  // Append the new chat line, making sure that if the chatlog was scrolled to the bottom
-  // before, it remains scrolled to the bottom, and otherwise the scroll position doesn't
-  // change.
   chatlog.appendChild(p);
   if (isAtBottom) {
     chatlog.scrollBy(0, 1e8);
@@ -478,5 +437,4 @@ function addChatMessage(name, text) {
 
 startNameChooser();
 </script>
-<!--===================================================================================-->
 </html>
