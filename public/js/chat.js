@@ -15,6 +15,7 @@ const pvChatForm = document.getElementById("pvChatForm");
 const pvMessageInput = document.getElementById("pvMessageInput");
 const modalTitle = document.getElementById("modalTitle");
 const pvChatMessage = document.getElementById("pvChatMessage");
+const logoutbtn = document.getElementById('logout')
 
 const nickname = localStorage.getItem("nickname");
 const roomNumber = localStorage.getItem("chatroom");
@@ -124,3 +125,7 @@ $("#pvChat").on("show.bs.modal", function (e) {
   modalTitle.innerHTML = "Send message to " + user;
   pvChatMessage.style.display = "none";
 });
+
+logoutbtn.addEventListener('click',()=>{
+  window.location.replace('/')
+})

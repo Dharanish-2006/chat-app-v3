@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
   <title>Chat Application</title>
 </head>
 
@@ -21,11 +20,20 @@
     --bs-alert-padding-x: 5px;
     --bs-alert-padding-y: 5px;  
 }
+#ul button,
+#ul a{
+  background-color: transparent;
+  border: none;
+  color: white;
+  float: inline-end;
+  text-decoration: none;
+}
 </style>
 
 <body class="rtl bg-info">
   <div class="container-fluid bg-info">
     <div class="bg-primary p-1 w-100 border border-info" style="border-radius: 1em">
+      <span id="ul" ><button id="logout"><a href="#">logout</a></button></span>
       <ul id="online-users-list" class="
                         list-group list-group-horizontal list-unstyled
                         overflow-auto
