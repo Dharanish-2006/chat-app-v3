@@ -21,15 +21,7 @@ let users = [];
 
 io.use((socket, next) => {
   const token = socket.handshake.auth.token;
-  const id = 123456;
-
-  if (token == undefined) {
-    console.log("fuck u");
-  } else if (token != id) {
-    console.log("fuck u two");
-  } else {
-    next();
-  }
+  const id = 123456
 });
 
 const chatNameSpace = io.of("/chat");
