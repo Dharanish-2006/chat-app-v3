@@ -18,14 +18,60 @@
     --bs-btn-active-bg:#16191e;
     }
   </style>
-  <form id="nicknameForm">
-    <h3 class="h3">
-      Please enter your username
-    </h3>
+      <form class="row g-3 needs-validation d-block" id="nicknameForm" novalidate>
+        <div class="col-md-2">
+          <label for="validationCustom01" class="form-label">First name</label>
+          <input type="text" class="form-control" id="validationCustom01" placeholder="Mark" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Enter Your First Name
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="validationCustom02" class="form-label">Last name</label>
+          <input type="text" class="form-control" id="validationCustom02" placeholder="Otto" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Please Enter Your Last Name
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label for="validationCustomUsername" class="form-label">Username</label>
+          <div class="input-group has-validation">
+          <input type="text" name="nickname" id="nicknameInput" class="form-control " placeholder="Username" required autofocus />
+            <div class="invalid-feedback">
+              Please choose a username.
+            </div>
+          </div>
+          <div class="col-md-2">
+            <label for="validationCustom03" class="form-label">Email</label>
+            <input type="email" class="form-control" id="validationCustom03" placeholder="Example@gmail.com" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please Enter a Valid Email
+            </div>
+          <div class="col-md-2">
+            <label for="validationCustom04" class="form-label">age</label>
+            <input type="date" class="form-control" id="validationCustom04" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <div class="invalid-feedback">
+              Please Enter a Valid Email
+            </div>
+    
+          </div>
+        </div>    
+
     <label for="nicknameInput" class="sr-only">Username</label>
     <div class="row justify-content-center">
       <div class="col-sm-2">
-        <input type="text" name="nickname" id="nicknameInput" class="form-control " placeholder="Username" required autofocus />
       </div>
     </div>
     <!-- Chat Room Selection -->
@@ -42,12 +88,12 @@
     <input type="radio" name="val" class="btn-check" id="btn-check-2" value="room2">
     <label class="btn btn-primary" for="btn-check-2">Fitness</label>
     
-    <input type="radio" name="val" class="btn-check" id="btn-check-3" value="room3">
+    <input type="radio"    name="val" class="btn-check" id="btn-check-3" value="room3">
     <label class="btn btn-primary" for="btn-check-3">Cafe</label>
 
     <input type="radio" name="val" class="btn-check" id="btn-check-5" value="room5">
     <label class="btn btn-primary" for="btn-check-5">Restaurant</label>
-    
+    <br>
     <button class="btn btn-primary" type="submit" onclick="fun()">
       Enter Chat
     </button>
