@@ -1,5 +1,5 @@
 const http = require("http");
-
+const mongoose = require('mongoose');
 const express = require("express");
 const { Server } = require("socket.io");
 
@@ -12,8 +12,54 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  console.log(`Server started on 3000`);
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/chatApp', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
+// Define the Schema for the form data
+const userSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  username: String,
+  email: String,
+  age: Date,
+  chatroom: String,
+});
+
+// Create the model
+const User = mongoose.model('User', userSchema);
+
+// Handle form submission
+app.post('/submit-form', (req, res) => {
+  const { firstName, lastName, username, email, age, chatroom } = req.body;
+
+  // Create a new User document
+  const newUser = new User({
+    firstName,
+    lastName,
+    username,
+    email,
+    age,
+    chatroom,
+  });
+
+  // Save the user to the database
+  newUser.save()
+    .then(() => res.json({ message: 'User data saved successfully!' }))
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
+
+// Serve static files (HTML form)
+app.use(express.static('public'));
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
 
 // Setup Websocket
