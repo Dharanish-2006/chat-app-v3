@@ -57,12 +57,12 @@
             </div>
           <div class="col-md-4">
             <label for="validationCustom04" class="form-label">age</label>
-            <input type="date" class="form-control" id="validationCustom04" required>
+            <input type="number" class="form-control" id="validationCustom04" required>
             <div class="valid-feedback">
               Looks good!
             </div>
             <div class="invalid-feedback">
-              Please Enter a Valid Email
+              Please Enter a Valid 
             </div>
     
           </div>
@@ -111,28 +111,63 @@
       }
     }
     nicknameForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (nicknameInput.value) {
+  e.preventDefault();
+  
+  const firstName = document.getElementById("validationCustom01").value;
+  const lastName = document.getElementById("validationCustom02").value;
+  const email = document.getElementById("validationCustom03").value;
+  const age = document.getElementById("validationCustom04").value;
+  const ageNumber = Number(age);
+
+  (() => {
+  const forms = document.querySelectorAll('.needs-validation')
+'use strict'
+
+Array.from(forms).forEach(form => {
+  form.addEventListener('submit', event => {
+    if (!form.checkValidity()) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    form.classList.add('was-validated')
+  }, false)
+})
+})
+
+  if (nicknameInput.value && firstName && lastName && email && age && selectedroom) {
+    const userData = {
+      firstName: firstName,
+      lastName: lastName,
+      username: nicknameInput.value,
+      email: email,
+      age: ageNumber,
+      chatroom: selectedroom,
+    };
+
+    // Send the data to the server
+    fetch('/submit-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        // Redirect to the chat page after successful submission
         localStorage.setItem("nickname", nicknameInput.value);
         localStorage.setItem("chatroom", selectedroom);
         window.location.replace("/chat.html");
       }
+    }).catch(error => {
+      console.error('Error:', error);
     });
-    (() => {
-    const forms = document.querySelectorAll('.needs-validation')
-  'use strict'
-
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
+  }else {
+    alert("Please fill out all fields before submitting.");
+  }
+});
   </script>
 </body>
 

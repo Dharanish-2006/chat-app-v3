@@ -2,7 +2,7 @@ const http = require("http");
 const mongoose = require('mongoose');
 const express = require("express");
 const { Server } = require("socket.io");
-
+const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
@@ -17,17 +17,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/chatApp', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/chatApp')
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Define the Schema for the form data
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   username: String,
   email: String,
-  age: Date,
+  age: Number,
   chatroom: String,
 });
 
@@ -54,12 +53,12 @@ app.post('/submit-form', (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
-// Serve static files (HTML form)
-app.use(express.static('public'));
+// // Serve static files (HTML form)
+// app.use(express.static('public'));
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 // Setup Websocket
