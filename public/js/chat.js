@@ -106,7 +106,7 @@ chatNamespace.on("online", (data) => {
   data.forEach((user) => {
     if (roomNumber == user.roomNumber) {
       onlineUsers.innerHTML += `
-      <h1>${user.roomNumber}</h1>
+      <p class = 'RoomName'>${user.roomNumber}</p>
             <li>
             <button type="button" class="btn btn-light mx-2 p-2" data-toggle="modal" data-target="#pvChat" data-id=${
               user.id
