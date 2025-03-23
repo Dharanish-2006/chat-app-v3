@@ -177,6 +177,7 @@
       justify-content: center;
     }
   </style>
+  <!-- 'row g-3 needs-validation d-block' -->
   <div class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="form-container">
       <h1>COLLAB X</h1>
@@ -217,7 +218,7 @@
 
         <div class="mb-3">
           <label class="mt-2" for="chatrooms" class="form-label">Choose a Chat Room</label><br>
-          <input type="radio" name="val" class="btn-check" id="btn-check-1" value="Import/Export business" required>
+          <input type="radio" name="val" class="btn-check" id="btn-check-1" value="Import/Export business">
           <label class="btn btn-outline-dark radio-label" for="btn-check-1">Import/Export Business</label>
           
           <input type="radio" name="val" class="btn-check" id="btn-check-2" value="Boutique">
@@ -234,7 +235,7 @@
         </div>
 
         <div class="col-md-12">
-          <button class="btn btn-primary w-100" type="submit">
+          <button class="btn btn-primary w-100" type="submit" onclick="fun()">
             Enter Chat
           </button>
         </div>
