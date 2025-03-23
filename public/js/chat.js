@@ -17,10 +17,13 @@ const pvMessageInput = document.getElementById("pvMessageInput");
 const modalTitle = document.getElementById("modalTitle");
 const pvChatMessage = document.getElementById("pvChatMessage");
 const logoutbtn = document.getElementById('logout')
-
+const roomname = document.getElementById('roomname')
+console.log(roomname);
 const nickname = localStorage.getItem("nickname");
 const roomNumber = localStorage.getItem("chatroom");
 let socketId;
+
+
 
 // Emit Events
 chatNamespace.emit("login", { nickname, roomNumber });
@@ -103,6 +106,7 @@ chatNamespace.on("online", (data) => {
   data.forEach((user) => {
     if (roomNumber == user.roomNumber) {
       onlineUsers.innerHTML += `
+      <h1>${user.roomNumber}</h1>
             <li>
             <button type="button" class="btn btn-light mx-2 p-2" data-toggle="modal" data-target="#pvChat" data-id=${
               user.id
