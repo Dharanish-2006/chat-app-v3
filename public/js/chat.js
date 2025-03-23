@@ -65,7 +65,6 @@ chatNamespace.on("chat message", (data) => {
                                 
                             <span
                                 class="
-                                    text-muted
                                     font-italic font-weight-light
                                     m-2
                                 "
