@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/chatApp')
+mongoose.connect('mongodb+srv://Dharanish:kikiakka123@cluster0.np7jc.mongodb.net/?retryWrites=true&w=majority&appName=Clustere')
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
