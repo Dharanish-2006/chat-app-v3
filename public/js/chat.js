@@ -59,7 +59,7 @@ chatNamespace.on("chat message", (data) => {
   feedback.innerHTML = "";
   chatBox.innerHTML += `<li class="alert alert-light">
                             <span
-                                class="text-dark font-weight-normal"
+                                class="text-light font-weight-normal"
                                 style="font-size: 13pt"
                                 >${data.nickname}
                                 
