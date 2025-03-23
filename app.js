@@ -1,7 +1,7 @@
 const http = require("http");
 const mongoose = require('mongoose');
 const express = require("express");
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -53,11 +53,8 @@ app.post('/submit-form', (req, res) => {
     .catch((err) => res.status(500).json({ error: err.message }));
 });
 
-// // Serve static files (HTML form)
-// app.use(express.static('public'));
-
 // Start the server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 

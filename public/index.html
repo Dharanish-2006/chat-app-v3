@@ -161,9 +161,8 @@ Array.from(forms).forEach(form => {
         localStorage.setItem("chatroom", selectedroom);
         window.location.replace("/chat.html");
       }
-    }).catch(error => {
-      console.error('Error:', error);
-    });
+    })
+    
   }else {
     alert("Please fill out all fields before submitting.");
   }
