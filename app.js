@@ -5,7 +5,7 @@ const {Server} = require("socket.io");
 const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server); 
 
 // Static Folder
 app.use(express.static("public"));

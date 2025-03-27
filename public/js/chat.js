@@ -1,4 +1,3 @@
-
 const chatNamespace = io("/chat", {
   auth: {
     token: 123456,
