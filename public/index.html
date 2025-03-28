@@ -177,11 +177,22 @@
       display: flex;
       justify-content: center;
     }
+    #logo img{
+      height: 50px;
+      width: 50px;
+    }
+    #logo{
+      justify-content: center;
+      display: flex
+    }
+
   </style>
   <!-- 'row g-3 needs-validation d-block' -->
   <div class="d-flex justify-content-center align-items-center min-vh-100">
     <div class="form-container">
-      <h1>COLLAB X</h1>
+      <span id="logo"><img src="./favicon.ico" alt="">
+        <h1>COLLAB X</h1>
+      </span>
       <form class="needs-validation" id="nicknameForm" novalidate>
         <div class="mb-3">
           <label for="validationCustom01" class="form-label">First Name</label>
