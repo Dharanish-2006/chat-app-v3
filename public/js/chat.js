@@ -53,6 +53,37 @@ pvChatForm.addEventListener("submit", (e) => {
   pvMessageInput.value = "";
 });
 
+function loadimg(){
+const imageInput = document.getElementById("imageInput");
+imageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      const imageData = reader.result; 
+      chatNamespace.emit("send-image", {
+        imageData,
+        nickname,
+        roomNumber,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+});
+}
+
+// Listen for received image and display it in chat
+chatNamespace.on("receive-image", (data) => {
+  chatBox.innerHTML += `
+    <li class="alert alert-light">
+      <span class="text-light font-weight-normal" style="font-size: 13pt">${data.nickname}</span>
+      <p class="alert alert-info mt-2">
+        <img src="${data.imageData}" alt="Received Image" style="max-width: 100%; max-height: 200px;">
+      </p>
+    </li>`;
+  chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
+});
+
 // Listening
 chatNamespace.on("chat message", (data) => {
   feedback.innerHTML = "";
