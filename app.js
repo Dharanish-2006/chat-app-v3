@@ -115,7 +115,17 @@ chatNameSpace.on("connection", (socket) => {
       imageData: data.imageData  // This is the base64 image
     });
   });
+  socket.on("send-location", (data) => {
+    const { nickname, roomNumber, latitude, longitude } = data;
 
+    // Broadcast the location to all users in the same room
+    chatNameSpace.to(roomNumber).emit("receive-location", {
+      nickname,
+      latitude,
+      longitude
+    });
+  });
+  
   socket.on("pvChat", (data) => {
     chatNameSpace.to(data.to).emit("pvChat", data);
   });

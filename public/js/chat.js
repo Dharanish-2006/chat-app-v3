@@ -53,17 +53,50 @@ pvChatForm.addEventListener("submit", (e) => {
   pvMessageInput.value = "";
 });
 
+const sendLocationBtn = document.getElementById('sendLocationBtn');
 
+// Handle sending location
+sendLocationBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    return alert("Geolocation is not supported by your browser.");
+  }
 
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
 
-// Listen for received image and display it in chat
+      // Emit the location to the server
+      chatNamespace.emit("send-location", {
+        nickname,
+        roomNumber,
+        latitude,
+        longitude
+      });
+
+      // Optionally show a message in the chat when location is sent
+      chatBox.innerHTML += `
+        <li class="alert alert-light">
+          <span class="text-light font-weight-normal" style="font-size: 13pt">${nickname}</span>
+          <p class="alert alert-info mt-2">
+            <a href="https://www.google.com/maps?q=${latitude},${longitude}" target="_blank" class="text-info">
+              Click here to view location
+            </a>
+          </p>
+        </li>`;
+      chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
+    },
+    (error) => {
+      alert("Unable to retrieve your location.");
+    }
+  );
+});
+
 document.getElementById('imageInput').addEventListener('change', function (e) {
   const file = e.target.files[0];
   if (file) {
     
     const reader = new FileReader();
     reader.onloadend = function () {
-      // Sending the image data to the server
       chatNamespace.emit("send-image", {
         imageData: reader.result,
         nickname: nickname,
@@ -121,7 +154,20 @@ chatNamespace.on("typing", (data) => {
     feedback.innerHTML = data;
   }
 });
-
+chatNamespace.on("receive-location", (data) => {
+  const { nickname, latitude, longitude } = data;
+  
+  chatBox.innerHTML += `
+    <li class="alert alert-light">
+      <span class="text-light font-weight-normal" style="font-size: 13pt">${nickname}</span>
+      <p class="alert alert-info mt-2">
+        <a href="https://www.google.com/maps?q=${latitude},${longitude}" target="_blank" class="text-info">
+          ${nickname} shared their location. Click here to view it on Google Maps.
+        </a>
+      </p>
+    </li>`;
+  chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
+});
 chatNamespace.on("pvChat", (data) => {
   $("#pvChat").modal("show");
   socketId = data.from;
