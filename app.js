@@ -110,11 +110,9 @@ chatNameSpace.on("connection", (socket) => {
   });
   
   socket.on("send-image", (data) => {
-    // console.log("Image received from", data.nickname);
-    // Emit the image to all users in the same room
     chatNameSpace.to(data.roomNumber).emit("receive-image", {
       nickname: data.nickname,
-      imageData: data.imageData,
+      imageData: data.imageData  // This is the base64 image
     });
   });
 

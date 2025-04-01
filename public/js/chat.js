@@ -53,35 +53,25 @@ pvChatForm.addEventListener("submit", (e) => {
   pvMessageInput.value = "";
 });
 
-function loadimg(){
-const imageInput = document.getElementById("imageInput");
-imageInput.addEventListener('change', (e) => {
+
+
+
+// Listen for received image and display it in chat
+document.getElementById('imageInput').addEventListener('change', function (e) {
   const file = e.target.files[0];
   if (file) {
+    
     const reader = new FileReader();
     reader.onloadend = function () {
-      const imageData = reader.result; 
+      // Sending the image data to the server
       chatNamespace.emit("send-image", {
-        imageData,
-        nickname,
-        roomNumber,
+        imageData: reader.result,
+        nickname: nickname,
+        roomNumber: roomNumber
       });
     };
     reader.readAsDataURL(file);
   }
-});
-}
-
-// Listen for received image and display it in chat
-chatNamespace.on("receive-image", (data) => {
-  chatBox.innerHTML += `
-    <li class="alert alert-light">
-      <span class="text-light font-weight-normal" style="font-size: 13pt">${data.nickname}</span>
-      <p class="alert alert-info mt-2">
-        <img src="${data.imageData}" alt="Received Image" style="max-width: 100%; max-height: 200px;">
-      </p>
-    </li>`;
-  chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
 });
 
 // Listening
@@ -110,6 +100,16 @@ chatNamespace.on("chat message", (data) => {
                             </li>`;
   chatContainer.scrollTop =
     chatContainer.scrollHeight - chatContainer.clientHeight;
+});
+chatNamespace.on("receive-image", (data) => {
+  chatBox.innerHTML += `
+    <li class="alert alert-light">
+      <span class="text-light font-weight-normal" style="font-size: 13pt">${data.nickname}</span>
+      <p class="alert alert-info mt-2">
+        <img src="${data.imageData}" alt="Received Image" style="max-width: 100%; max-height: 200px;">
+      </p>
+    </li>`;
+  chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
 });
 
 messageInput.addEventListener("keypress", (e) => {
