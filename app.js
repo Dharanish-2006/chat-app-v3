@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server); 
+require('dotenv').config()
 
 // Static Folder
 app.use(express.static("public"));
@@ -17,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://Dharanish:kikiakka123@cluster0.np7jc.mongodb.net/?retryWrites=true&w=majority&appName=Clustere')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 

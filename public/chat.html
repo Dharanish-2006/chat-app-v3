@@ -32,6 +32,22 @@
   font-family: monospace;
   font-size: 25px;
 }
+#imageInput {
+  display: none;
+}
+.file-label {
+  display: inline-block;
+  padding: 10px 10px;
+  background-color: #6c757d;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+}
+
+.file-label:hover {
+  background-color: #0056b3;
+}
 </style>
 
 <body class="rtl bg-dark">
@@ -46,8 +62,9 @@
         <div id="feedback"></div>
         <div class="d-flex justify-content-center fixed-bottom"></li>
           <form id="chatForm" class="form-group mb-0">
-            <div class="input-group">
+            <div class="input-group" style="gap: 20px;">
               <input type="text" name="message" id="messageInput" class="form-control" placeholder="Message text..." />
+              <label for="imageInput" class="file-label">Choose an Image</label>
               <input type="file" id="imageInput" accept="image/*" class="form-control" />
               <button type="button" class="btn btn-secondary border-0" style="border-radius: 20px;" id="sendLocationBtn">
                 <img src="./loc_logo.svg" alt="">
